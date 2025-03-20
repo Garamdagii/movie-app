@@ -125,9 +125,7 @@ export default function Home() {
                   <CardDescription>{el.score}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="w-[302px] text-[#FAFAFA] text-xs leading-[16px]">
-                    {el.content}
-                  </p>
+                  <p className="w-[302px]">{el.content}</p>
                 </CardContent>
                 <CardFooter>
                   <p>{el.trailer}</p>
