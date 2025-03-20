@@ -76,21 +76,6 @@ const upcomingData = [
   },
 ];
 
-// const data2 = [
-//   {
-//     poster_path:
-//       "https://s3-alpha-sig.figma.com/img/6415/2808/0ffbeccc1a7cdd3a5199e0755d66e253?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=fCQufcR3am1qiooLQaqM9Q41NfwFPOLbPAZzQ3vVA3ubkL8vXYVlOARoxW3mVGAKW10Or4rEsgbn1We-Uv7tTuXNoCKZySv1bpIdwl683L-HGFQCh2aolanzjTygbJRG8oxQTaOW~juemQwUKxKlVfDrku7eyKv7kCfb8GjtOtzOXMjPUGfQ1cPuDBT-lQ66x3KsLKXsEsvNyS04Nl-XgtKjiFq3J8vWz--Y7SKpB16xhs5medKqDLyR2gKclKWDTQHp2j3nb5xDgNcjumvVKF8BAMHiDyS~EKQBNdHZif7FuEWg4eIGY97oHzVI0GbCsUbWHh0mcj~FV-FZhmU~fQ__",
-//     title: "Dear Santa",
-//     vote_average: "6.9",
-//   },
-//   {
-//     poster_path:
-//       "https://s3-alpha-sig.figma.com/img/4b08/7764/bc03cf6c5fe844d5ce89f9658466dfef?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=VxBf6a0UyNNWI2Ef8E9MKlxZyc7jcRh-qGeLDOkVM5XhV1f~sVYxwSFoidjGrQXETt45YTjmIScYqZSvyuzwmi4qgBT5YAPnS9NSSjWBqWpSONfypvg3GL6l6SDn2mxOqJ1hlrtm6BSm8Dxh8Is5UH3D96O91AeEBtziVQkE8UXZxn51XGJbKR8haCM1Y9G~649PPFyWcnVO4BZHnDC31L8sm8a11VDPZDoo4LaP5cLeHgWkb4MO3DeHYsIqG-xMZ4B9yy5ffhL86UEuULXd5okztHFp1lEGdKTrARjAVR-4~5O5RGFjsm1Hr7G9ACqNPXJZD9dtt8ixIK8w0D7Zlw__",
-//     title: "Dear Santa",
-//     vote_average: "6.9",
-//   },
-// ];
-
 // const TitleType = () => {
 //   type TitleType = {
 //     adult: Boolean;
@@ -109,6 +94,7 @@ const upcomingData = [
 //     vote_count: Number;
 //   };
 // };
+
 export default function Home() {
   const [data, setData] = useState([{}]);
   useEffect(() => {
@@ -121,7 +107,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-screen h-screen">
+    <div className="flex flex-col w-screen h-screen gap-[52px]">
       <p>text</p>
       <Carousel>
         <CarouselContent>
@@ -153,6 +139,7 @@ export default function Home() {
         <CarouselPrevious className="left-[44px]" />
         <CarouselNext className="right-[44px]" />
       </Carousel>
+
       <div className="flex flex-wrap px-20 gap-[32px] ">
         {data?.map((data: any, index: number) => {
           return (
