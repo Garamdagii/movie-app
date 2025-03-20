@@ -42,6 +42,7 @@ import {
   NavigationMenuTrigger,
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
+import { strict } from "assert";
 
 const upcomingData = [
   {
@@ -76,27 +77,28 @@ const upcomingData = [
   },
 ];
 
-// const TitleType = () => {
-//   type TitleType = {
-//     adult: Boolean;
-//     backdrop_path: String;
-//     genre_ids: Array<Number>;
-//     id: Number;
-//     original_language: String;
-//     original_title: String;
-//     overview: String;
-//     popularity: Number;
-//     poster_path: String;
-//     release_date: String;
-//     title: String;
-//     video: Boolean;
-//     vote_average: Number;
-//     vote_count: Number;
-//   };
-// };
+type TitleType = {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: string;
+  vote_count: number;
+};
+
+// interface propsType {}
+// type propsType {}
 
 export default function Home() {
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState<TitleType[]>();
   useEffect(() => {
     axios
       .get(
@@ -139,7 +141,7 @@ export default function Home() {
       </Carousel>
 
       <div className="flex flex-wrap px-20 gap-[32px] ">
-        {data?.map((data: any, index: number) => {
+        {data?.map((data, index) => {
           return (
             <Movies
               key={index}

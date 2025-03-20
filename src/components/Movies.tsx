@@ -11,7 +11,7 @@ export const Movies = ({
   vote_average: string;
 }) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-fit h-fit">
       <img className="w-[230px] h-[340px]" src={poster_path}></img>
       <div className="flex flex-col p-2 ">
         <div className="flex gap-1">
@@ -25,7 +25,11 @@ export const Movies = ({
             </p>
           </div>
         </div>
-        <CardTitle className="text-lg leading-[28px] text-ellipsis text-[#09090B] overflow-hidden">
+        <CardTitle
+          className={
+            "w-[214px] flex flex-wrap text-lg leading-[28px] text-[#09090B] truncate overflow-hidden  text-ellipsis"
+          }
+        >
           {title}
         </CardTitle>
       </div>
