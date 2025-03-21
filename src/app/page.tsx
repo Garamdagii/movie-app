@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Movies } from "@/components/Movies";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,6 +42,13 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import { strict } from "assert";
+import { Header } from "@/components/header";
+import { Category } from "@/components/category";
+import { Movies } from "@/components/labeledMovies";
+import { Upcoming } from "@/components/upcoming";
+import { Popular } from "@/components/popular";
+import { Toprated } from "@/components/toprated";
+import { Footer } from "@/components/footer";
 
 const upcomingData = [
   {
@@ -98,19 +104,9 @@ type TitleType = {
 // type propsType {}
 
 export default function Home() {
-  const [data, setData] = useState<TitleType[]>();
-  useEffect(() => {
-    axios
-      .get(
-        "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289"
-      )
-      .then((res) => setData(res.data.results))
-      .catch((err) => console.log(`error`, err));
-  }, []);
-
   return (
-    <div className="flex flex-col w-screen h-screen gap-[52px]">
-      <p>text</p>
+    <div className="flex flex-col w-screen h-screen gap-[24px]">
+      <Header />
       <Carousel>
         <CarouselContent>
           {upcomingData.map((el, index) => (
@@ -140,18 +136,11 @@ export default function Home() {
         <CarouselNext className="right-[44px]" />
       </Carousel>
 
-      <div className="flex flex-wrap px-20 gap-[32px] ">
-        {data?.map((data, index) => {
-          return (
-            <Movies
-              key={index}
-              poster_path={`https://image.tmdb.org/t/p/original${data.poster_path}`}
-              title={data.title}
-              vote_average={data.vote_average}
-            />
-          );
-        })}
-      </div>
+      <Upcoming />
+      <Popular />
+      <Toprated />
+
+      <Footer />
     </div>
   );
 }
