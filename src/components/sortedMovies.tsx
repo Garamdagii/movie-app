@@ -102,7 +102,7 @@ export const SortedMovies = ({}) => {
       <div className="flex flex-col gap-8 px-20 w-full">
         <Label text="Popular" />
         <div className="flex flex-wrap gap-[32px]">
-          {dataPopular?.splice(0, 10).map((data, index) => {
+          {dataPopular?.slice(0, 10).map((data, index) => {
             return (
               <Movies
                 onClick={() => handleOnClick(data.id)}
