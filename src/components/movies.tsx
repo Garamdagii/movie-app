@@ -5,11 +5,13 @@ export const Movies = ({
   poster_path,
   title,
   vote_average,
+  className,
   onClick,
 }: {
   poster_path: string;
   title: string;
   vote_average: string;
+  className: any;
   onClick: () => void;
 }) => {
   return (
@@ -17,7 +19,10 @@ export const Movies = ({
       onClick={onClick}
       className="flex flex-col w-fit h-[439px] bg-[#F4F4F5] rounded-[8px]"
     >
-      <img className="w-[230px] h-[340px]" src={poster_path}></img>
+      <img
+        className={`w-[230px] h-[340px]` + className}
+        src={poster_path}
+      ></img>
       <div className="flex flex-col p-2 items-start ">
         <div className="flex gap-1">
           <Star className="size-[16px] fill-[#FDE047] stroke-[#FDE047]" />
@@ -35,11 +40,6 @@ export const Movies = ({
         <p className="w-[214px] h-[56px] flex text-lg leading-[28px] text-[#09090B] text-wrap overflow-hidden hover:overflow-visible">
           {title}
         </p>
-        {/* <CardTitle
-          className={"w-[214px] flex text-lg leading-[28px] text-[#09090B]"}
-        >
-          {title}
-        </CardTitle> */}
       </div>
     </div>
   );

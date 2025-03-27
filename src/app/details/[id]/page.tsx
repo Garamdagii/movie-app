@@ -12,6 +12,7 @@ import { Label } from "@/components/label";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
+import { MovieDetails } from "@/components/movieDetails";
 
 type TitleTypes = {
   adult: boolean;
@@ -31,25 +32,6 @@ type TitleTypes = {
   vote_count: number;
 };
 
-type CreditTypes = {
-  overview: string;
-  cast: cast[];
-  crew: crew[];
-};
-
-type cast = {
-  id: number;
-  known_for_department: string;
-  name: string;
-};
-
-type crew = {
-  id: number;
-  known_for_department: string;
-  name: string;
-  department: string;
-  job: string;
-};
 // getfetchdata
 // async
 // await
@@ -63,48 +45,40 @@ type crew = {
 const Details = () => {
   const [dataSimilar, setDataSimilar] = useState<TitleTypes[]>();
   const [data, setData] = useState<TitleTypes>();
-  const [dataCredits, setDataCredits] = useState<CreditTypes>();
 
   const { id } = useParams();
 
   useEffect(() => {
     similarMovies();
     specificMovies();
-    movieCredits();
   }, []);
 
-  const similarMovies = () => {
-    return axios
+  const similarMovies = async () => {
+    await axios
       .get(
         `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
       )
-      .then((res) => setDataSimilar(res.data.results))
-      .catch((err) => console.log(err, "error"));
+      .then((res) => {
+        setDataSimilar(res.data.results);
+      });
   };
 
-  const specificMovies = () => {
-    return axios
+  const specificMovies = async () => {
+    await axios
       .get(
         `https://api.themoviedb.org/3/movie/${id}?language=en-US&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
       )
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err, "error"));
-  };
-
-  const movieCredits = () => {
-    return axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
-      )
-      .then((res) => setDataCredits(res.data))
-      .catch((err) => console.log(err, "error"));
+      .then((res) => {
+        setData(res.data);
+      });
   };
 
   return (
     <div className="w-screen h-screen">
       <Header />
-      <div className="w-full flex flex-col justify-center items-center gap-8 pt-[52px] pb-[113px]">
-        <div className="flex justify-between w-[1080px]">
+
+      <div className="flex flex-col gap-8 pt-[52px] pb-[113px] px-[180px] w-full">
+        <div className="flex justify-between">
           <div className="flex flex-col">
             <CardTitle className="text-[#09090B] text-4xl font-bold leading-[40px] ">
               {data?.title}
@@ -161,8 +135,9 @@ const Details = () => {
             </div>
           </div>
         </div>
+        <MovieDetails />
 
-        <div className="flex flex-col gap-8 px-20 w-full">
+        <div className="flex flex-col gap-8">
           <Label text="More like this" />
           <div className="flex flex-wrap gap-[32px]">
             {dataSimilar?.splice(0, 5).map((data, index) => {
@@ -181,40 +156,6 @@ const Details = () => {
           </div>
         </div>
       </div>
-
-      <div className="flex gap-3">
-        {data?.genres.map((value, index) => {
-          return (
-            <div
-              key={index}
-              className="flex py-[2px] px-[10px] items-start rounded-[9999px] border solid botder-[#E4E4E7]"
-            >
-              <p className="text-xs font-semibold leading-[16px text-[#09090B]">
-                {value.name}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-
-      {dataCredits?.crew.map((value, index) => {
-        return (
-          value.department === "Directing" &&
-          value.job === "Director" && <p key={index}>{value.name}</p>
-        );
-      })}
-      {dataCredits?.crew.map((value, index) => {
-        return (
-          value.department === "Writing" && <p key={index}>{value.name}</p>
-        );
-      })}
-      {dataCredits?.cast.slice(0, 3).map((value, index) => {
-        return (
-          value.known_for_department === "Acting" && (
-            <p key={index}>{value.name}</p>
-          )
-        );
-      })}
 
       <Footer />
     </div>
