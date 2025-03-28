@@ -3,7 +3,7 @@ import { MoveRight } from "lucide-react";
 
 export const Label = ({ text }: { text: string }) => {
   return (
-    <div className="flex justify-between items-center w-full">
+    <div className="w-full flex justify-between items-center">
       <p className="text-2xl font-semibold leading-[32px] text-[#09090B]">
         {text}
       </p>

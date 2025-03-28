@@ -83,6 +83,7 @@ export const SortedMovies = ({}) => {
           })}
         </div>
       </div>
+
       <div className="flex flex-col gap-8 px-20 w-full">
         <Label text="Toprated" />
         <div className="flex flex-wrap gap-[32px]">

@@ -1,10 +1,12 @@
+"use client";
+
 import { Film } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { Moon } from "lucide-react";
 import { ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "./inputSearch";
 
 import {
   DropdownMenu,
@@ -24,6 +26,7 @@ type genreTypes = {
 
 export const Header = ({}) => {
   const [genres, setGenres] = useState<genreTypes[]>();
+
   useEffect(() => {
     axios
       .get(
@@ -63,14 +66,15 @@ export const Header = ({}) => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className="flex w-[379px] gap-[10px] px-3 items-center rounded-[8px] border solid border-[#E4E4E7]">
+          {/* <div className="flex w-[379px] gap-[10px] px-3 items-center rounded-[8px] border solid border-[#E4E4E7]">
             <Search className="size-[16px] opacity-[0.5] stroke-[#09090B]" />
             <Input
-              className={
+              className=
                 "flex w-full py-2 items-center text-sm leading-[20px] text-[#71717A] border-none shadow-none focus-visible:outline-none focus-visible:border-none"
-              }
             />
-          </div>
+          </div> */}
+
+          <Input />
         </div>
         <Button
           className={

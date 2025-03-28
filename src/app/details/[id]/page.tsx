@@ -74,9 +74,7 @@ const Details = () => {
   };
 
   return (
-    <div className="w-screen h-screen">
-      <Header />
-
+    <div className="w-screen h-fit">
       <div className="flex flex-col gap-8 pt-[52px] pb-[113px] px-[180px] w-full">
         <div className="flex justify-between">
           <div className="flex flex-col">
@@ -156,8 +154,6 @@ const Details = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
