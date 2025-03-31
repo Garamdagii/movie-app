@@ -17,3 +17,5 @@ export const Label = ({ text }: { text: string }) => {
     </div>
   );
 };
+
+// currentpage === index

@@ -66,6 +66,24 @@ export const Header = ({}) => {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* <div>
+            <select>
+              <option value="">
+                <ChevronDown />
+              </option>
+            </select>
+            <select className="appearance-none">
+              <option value="">Genre</option>
+              {genres?.map((genre, index) => {
+                return (
+                  <option key={index} value={genre.name}>
+                    {genre.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div> */}
+
           {/* <div className="flex w-[379px] gap-[10px] px-3 items-center rounded-[8px] border solid border-[#E4E4E7]">
             <Search className="size-[16px] opacity-[0.5] stroke-[#09090B]" />
             <Input

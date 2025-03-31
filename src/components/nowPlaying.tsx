@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Star } from "lucide-react";
 import { Button } from "./ui/button";
+import { axiosInstance } from "@/lib/utils";
 
 type TitleTypes = {
   adult: boolean;
@@ -44,10 +45,8 @@ export const NowPlaying = () => {
   const [data, setData] = useState<TitleTypes[]>();
 
   useEffect(() => {
-    axios
-      .get(
-        "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289"
-      )
+    axiosInstance
+      .get("movie/now_playing?language=en-US&page=1")
       .then((res) => setData(res.data.results))
       .catch((err) => console.log(err, "error"));
   }, []);

@@ -1,7 +1,5 @@
 "use client";
 
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
 import { Movies } from "@/components/movies";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import axios from "axios";
@@ -137,13 +135,11 @@ const Details = () => {
 
         <div className="flex flex-col gap-8">
           <Label text="More like this" />
-          <div className="flex flex-wrap gap-[32px]">
+          <Movies movieData="similar" />
+          {/* <div className="flex flex-wrap gap-[32px]">
             {dataSimilar?.splice(0, 5).map((data, index) => {
               return (
                 <Movies
-                  onClick={() => {
-                    return;
-                  }}
                   key={index}
                   poster_path={`https://image.tmdb.org/t/p/original${data.poster_path}`}
                   title={data.title}
@@ -151,7 +147,7 @@ const Details = () => {
                 />
               );
             })}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

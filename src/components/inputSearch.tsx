@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
+import { axiosInstance } from "@/lib/utils";
 
 type DataTypes = {
   title: string;
@@ -21,10 +22,8 @@ export const Input = () => {
   }, [inputText]);
 
   const searchMovies = async () => {
-    await axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?query=${inputText}&language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
-      )
+    await axiosInstance
+      .get(`search/movie?query=${inputText}&language=en-US&page=1`)
       .then((res) => {
         setDataSearch(res.data.results);
         // console.log(res.data.results);

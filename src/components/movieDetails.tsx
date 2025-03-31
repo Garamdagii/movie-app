@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import axios from "axios";
+import { axiosInstance } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -50,20 +50,14 @@ export const MovieDetails = ({}) => {
   }, []);
 
   const specificMovies = async () => {
-    await axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${id}?language=en-US&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
-      )
-      .then((res) => {
-        setDataSpecific(res.data);
-      });
+    await axiosInstance.get(`movie/${id}?language=en-US`).then((res) => {
+      setDataSpecific(res.data);
+    });
   };
 
   const movieCredits = async () => {
-    await axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
-      )
+    await axiosInstance
+      .get(`movie/${id}/credits?language=en-US`)
       .then((res) => {
         setDataCredits(res.data);
       });
