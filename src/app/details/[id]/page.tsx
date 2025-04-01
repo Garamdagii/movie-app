@@ -1,27 +1,25 @@
 "use client";
 
-import { Movies } from "@/components/movies";
-import { CardDescription, CardTitle } from "@/components/ui/card";
-import axios from "axios";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Star } from "lucide-react";
-import { Label } from "@/components/label";
+import { Star, Play } from "lucide-react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
-import { MovieDetails } from "@/components/movieDetails";
+import { useRouter } from "next/navigation";
+import {
+  Button,
+  CardDescription,
+  Label,
+  MovieDetails,
+  Movies,
+} from "@/components";
+import { axiosInstance } from "@/lib/utils";
 
 type TitleTypes = {
-  adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
   genres: { id: number; name: string };
-  id: number;
-  original_language: string;
-  original_title: string;
+  id: string;
   overview: string;
-  popularity: number;
   poster_path: string;
   release_date: string;
   title: string;
@@ -29,16 +27,6 @@ type TitleTypes = {
   vote_average: string;
   vote_count: number;
 };
-
-// getfetchdata
-// async
-// await
-
-// suspense
-// fallback - skeleteon bichih
-
-// { params: {id : string }
-// { params }: { params: Promise<{ id: string }> }
 
 const Details = () => {
   const [dataSimilar, setDataSimilar] = useState<TitleTypes[]>();
@@ -52,23 +40,23 @@ const Details = () => {
   }, []);
 
   const similarMovies = async () => {
-    await axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
-      )
+    await axiosInstance
+      .get(`movie/${id}/similar?language=en-US&page=1`)
       .then((res) => {
         setDataSimilar(res.data.results);
       });
   };
 
   const specificMovies = async () => {
-    await axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${id}?language=en-US&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
-      )
-      .then((res) => {
-        setData(res.data);
-      });
+    await axiosInstance.get(`movie/${id}?language=en-US`).then((res) => {
+      setData(res.data);
+    });
+  };
+
+  const router = useRouter();
+
+  const handleOnClick = (id: string) => {
+    router.push(`/details/${id}`);
   };
 
   return (
@@ -76,9 +64,9 @@ const Details = () => {
       <div className="flex flex-col gap-8 pt-[52px] pb-[113px] px-[180px] w-full">
         <div className="flex justify-between">
           <div className="flex flex-col">
-            <CardTitle className="text-[#09090B] text-4xl font-bold leading-[40px] ">
+            <h3 className="text-[#09090B] text-4xl font-bold leading-[40px] ">
               {data?.title}
-            </CardTitle>
+            </h3>
             <p className="text-lg leading-[28px] text-[#09090B]">
               {data?.release_date}· PG · 2h 40m
             </p>
@@ -91,9 +79,9 @@ const Details = () => {
               <Star className="size-[28px] fill-[#FDE047] stroke-[#FDE047] self-center" />
               <div>
                 <div className="flex">
-                  <CardDescription className="text-[#09090B] text-lg font-semibold leading-[28px]">
+                  <p className="text-[#09090B] text-lg font-semibold leading-[28px]">
                     {data?.vote_average}{" "}
-                  </CardDescription>
+                  </p>
                   <p className=" flex items-center text-xs leading-[16px] text-[#71717A]">
                     /10
                   </p>
@@ -135,19 +123,19 @@ const Details = () => {
 
         <div className="flex flex-col gap-8">
           <Label text="More like this" />
-          <Movies movieData="similar" />
-          {/* <div className="flex flex-wrap gap-[32px]">
-            {dataSimilar?.splice(0, 5).map((data, index) => {
+          <div className="flex flex-wrap gap-[32px]">
+            {dataSimilar?.slice(0, 5).map((el, index) => {
               return (
                 <Movies
                   key={index}
-                  poster_path={`https://image.tmdb.org/t/p/original${data.poster_path}`}
-                  title={data.title}
-                  vote_average={data.vote_average}
+                  onClick={() => handleOnClick(el.id)}
+                  poster_path={`https://image.tmdb.org/t/p/original${el.poster_path}`}
+                  title={el.title}
+                  vote_average={el.vote_average}
                 />
               );
             })}
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
@@ -155,3 +143,13 @@ const Details = () => {
 };
 
 export default Details;
+
+// getfetchdata
+// async
+// await
+
+// suspense
+// fallback - skeleteon bichih
+
+// { params: {id : string }
+// { params }: { params: Promise<{ id: string }> }

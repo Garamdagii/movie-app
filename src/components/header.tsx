@@ -1,11 +1,6 @@
 "use client";
 
-import { Film } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
-import { Moon } from "lucide-react";
-import { ChevronDown } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Film, Moon, ChevronDown } from "lucide-react";
 import { Input } from "./inputSearch";
 
 import {
@@ -18,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Badge, Button } from "@/components";
 
 type genreTypes = {
   id: number;
@@ -99,7 +95,6 @@ export const Header = ({}) => {
             "flex justify-center items-center size-[36px] py-2 px-4 rounded-[10px] border solid border-[#E4E4E7] shadow-sm shadow-[#E4E4E7] bg-[#FFF]"
           }
         >
-          {" "}
           <Moon className="size-[16px] stroke-[#18181B]" />
         </Button>
       </div>

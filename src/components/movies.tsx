@@ -24,6 +24,7 @@ export const Movies = ({
         height={340}
         src={`https://image.tmdb.org/t/p/original${poster_path}`}
         alt="image"
+        className="rounded-[8px]"
       />
       <div className="flex flex-col p-2 items-start ">
         <div className="flex gap-1">

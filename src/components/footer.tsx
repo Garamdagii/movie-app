@@ -1,8 +1,4 @@
-
-
-import { Film } from "lucide-react";
-import { Phone } from "lucide-react";
-import { Mail } from "lucide-react";
+import { Film, Phone, Mail } from "lucide-react";
 
 export const Footer = ({}) => {
   return (

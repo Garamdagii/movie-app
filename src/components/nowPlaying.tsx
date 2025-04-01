@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Play } from "lucide-react";
+import { Play, Star } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -19,20 +19,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { Star } from "lucide-react";
 import { Button } from "./ui/button";
 import { axiosInstance } from "@/lib/utils";
 
 type TitleTypes = {
-  adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
   id: number;
-  original_language: string;
-  original_title: string;
   overview: string;
-  popularity: number;
   poster_path: string;
   release_date: string;
   title: string;
@@ -47,8 +41,8 @@ export const NowPlaying = () => {
   useEffect(() => {
     axiosInstance
       .get("movie/now_playing?language=en-US&page=1")
-      .then((res) => setData(res.data.results))
-      .catch((err) => console.log(err, "error"));
+      .then((res) => setData(res.data.results));
+    // .catch((err) => console.log(err, "error"));
   }, []);
 
   return (
@@ -63,11 +57,11 @@ export const NowPlaying = () => {
                     // width={1440}
                     // height={600}
                     fill={true}
-                    src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
+                    src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
                     alt="image"
                   />
                 </div>
-                <Card className="w-fit h-fit absolute top-[178px] left-[140px] z-50 bg-transparent border-none shadow-none gap-4 p-0">
+                <Card className="w-[404px] h-fit absolute top-[178px] left-[140px] z-50 bg-transparent border-none shadow-none gap-4 p-0">
                   <CardHeader>
                     <p className="text-base leading-[24px] text-[#FFF]">
                       Now Playing:

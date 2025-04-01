@@ -1,8 +1,10 @@
+"use client";
+
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/lib/utils";
-import { Label } from "./label";
-import { Movies } from "./movies";
+import { useRouter } from "next/navigation";
+import { Label, Movies } from "@/components";
 
 type TitleTypes = {
   id: string;
@@ -11,28 +13,7 @@ type TitleTypes = {
   vote_average: string;
 };
 
-const titleName = [
-  {
-    text: "Upcoming",
-    movieData: "upcoming",
-  },
-  {
-    text: "Top Rated",
-    movieData: "top_rated",
-  },
-  {
-    text: "Popular",
-    movieData: "popular",
-  },
-];
-
-export const SortedMovies = ({
-  movieData,
-  titleName,
-}: {
-  movieData: string;
-  titleName: string;
-}) => {
+const SeeMoreMovies = () => {
   const [data, setData] = useState<TitleTypes[]>();
 
   const router = useRouter();
@@ -40,11 +21,6 @@ export const SortedMovies = ({
   const handleOnClick = (id: string) => {
     router.push(`/details/${id}`);
   };
-
-  const handleSeeMore = (movieData: string) => {
-    router.push(`/seeMoreMovies/${movieData}`);
-  };
-
   useEffect(() => {
     sortedMovies();
   }, []);
@@ -57,11 +33,13 @@ export const SortedMovies = ({
       });
   };
 
+  const { movieData } = useParams();
+
   return (
-    <div className="flex flex-col gap-8">
-      <Label text={titleName} onClick={() => handleSeeMore(movieData)} />
-      <div className="flex flex-wrap gap-[32px]">
-        {data?.slice(0, 10).map((el, index) => {
+    <div className="flex flex-col gap-8 px-[80px] py-[52px]">
+      <Label text={`${movieData}`} />
+      <div className="flex flex-wrap gap-8">
+        {data?.map((el, index) => {
           return (
             <Movies
               key={index}
@@ -76,3 +54,5 @@ export const SortedMovies = ({
     </div>
   );
 };
+
+export default SeeMoreMovies;

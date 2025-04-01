@@ -1,20 +1,18 @@
 "use client";
 
-import { SortedMovies } from "@/components/sortedMovies";
-import { NowPlaying } from "@/components/nowPlaying";
-import { Label } from "@/components/label";
+import { NowPlaying, SortedMovies } from "@/components";
 
-const titleData = [
+const data = [
   {
-    text: "Upcoming",
+    titleName: "Upcoming",
     movieData: "upcoming",
   },
   {
-    text: "Top Rated",
+    titleName: "Top Rated",
     movieData: "top_rated",
   },
   {
-    text: "Popular",
+    titleName: "Popular",
     movieData: "popular",
   },
 ];
@@ -23,14 +21,15 @@ export default function Home() {
   return (
     <div className="flex flex-col w-screen h-fit gap-[24px] ">
       <NowPlaying />
-      {titleData.map((el, index) => {
-        return (
-          <div key={index} className="flex flex-col gap-8 px-20 w-full">
-            <Label text={el.text} />
-            <SortedMovies movieData={el.movieData} />
-          </div>
-        );
-      })}
+      <div className="flex flex-col gap-8 px-20 py-[52px] w-full">
+        {data.map((el, index) => {
+          return (
+            <div key={index}>
+              <SortedMovies titleName={el.titleName} movieData={el.movieData} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
