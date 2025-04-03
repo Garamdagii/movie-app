@@ -21,11 +21,12 @@ import {
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { axiosInstance } from "@/lib/utils";
+import { PlayButton } from "./button";
 
 type TitleTypes = {
   backdrop_path: string;
   genre_ids: number[];
-  id: number;
+  id: string;
   overview: string;
   poster_path: string;
   release_date: string;
@@ -39,9 +40,9 @@ export const NowPlaying = () => {
   const [data, setData] = useState<TitleTypes[]>();
 
   useEffect(() => {
-    axiosInstance
-      .get("movie/now_playing?language=en-US&page=1")
-      .then((res) => setData(res.data.results));
+    axiosInstance.get("movie/now_playing?language=en-US&page=1").then((res) => {
+      setData(res.data.results);
+    });
     // .catch((err) => console.log(err, "error"));
   }, []);
 
@@ -52,15 +53,18 @@ export const NowPlaying = () => {
           {data?.splice(0, 3).map((data, index) => {
             return (
               <CarouselItem className="relative w-full h-full" key={index}>
-                <div className="w-full h-[600px]">
+                <div className="flex w-full h-[600px] relative">
                   <Image
-                    // width={1440}
-                    // height={600}
+                    // style={{ width: "100vw", height: "600px" }}
+                    priority
                     fill={true}
+                    // width={0}
+                    // height={0}
                     src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
                     alt="image"
                   />
                 </div>
+
                 <Card className="w-[404px] h-fit absolute top-[178px] left-[140px] z-50 bg-transparent border-none shadow-none gap-4 p-0">
                   <CardHeader>
                     <p className="text-base leading-[24px] text-[#FFF]">
@@ -86,6 +90,7 @@ export const NowPlaying = () => {
                       {data.overview}
                     </p>
                   </CardContent>
+                  <PlayButton isDetail={false} id={data.id} />
                   <Button className="w-fit flex h-[40px] py-2 px-4 justify-center items-center gap-2 rounded-[6px] bg-[#F4F4F5] text-sm font-medium leading-[20px] text-[#18181B]">
                     <Play className="size-[16px] stroke-[#18181B]" />
                     Watch Trailer

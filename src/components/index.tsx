@@ -12,3 +12,5 @@ export * from "./ui/card";
 export * from "./ui/carousel";
 export * from "./ui/dropdown-menu";
 export * from "./ui/separator";
+export * from "./logo";
+export * from "./movieGenres";

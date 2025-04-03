@@ -13,8 +13,9 @@ import {
   Movies,
 } from "@/components";
 import { axiosInstance } from "@/lib/utils";
+import { PlayButton } from "@/components/button";
 
-type TitleTypes = {
+type DataTypes = {
   backdrop_path: string;
   genre_ids: number[];
   genres: { id: number; name: string };
@@ -26,30 +27,40 @@ type TitleTypes = {
   video: boolean;
   vote_average: string;
   vote_count: number;
+  key: string;
 };
 
 const Details = () => {
-  const [dataSimilar, setDataSimilar] = useState<TitleTypes[]>();
-  const [data, setData] = useState<TitleTypes>();
+  const [dataSimilarMovies, setDataSimilarMovies] = useState<DataTypes[]>();
+  const [dataSpecificMovies, setDataSpecificMovies] = useState<DataTypes>();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [dataMovieTrailer, setDataMovieTrailer] = useState<DataTypes[]>();
 
-  const { id } = useParams();
+  const { id }: { id: string } = useParams();
 
   useEffect(() => {
-    similarMovies();
-    specificMovies();
+    fetchDataSimilarMovies();
+    fetchDataSpecificMovies();
+    fetchDataMovieTrailer();
   }, []);
 
-  const similarMovies = async () => {
+  const fetchDataSimilarMovies = async () => {
     await axiosInstance
       .get(`movie/${id}/similar?language=en-US&page=1`)
       .then((res) => {
-        setDataSimilar(res.data.results);
+        setDataSimilarMovies(res.data.results);
       });
   };
 
-  const specificMovies = async () => {
+  const fetchDataSpecificMovies = async () => {
     await axiosInstance.get(`movie/${id}?language=en-US`).then((res) => {
-      setData(res.data);
+      setDataSpecificMovies(res.data);
+    });
+  };
+
+  const fetchDataMovieTrailer = async () => {
+    await axiosInstance.get(`movie/${id}/videos?language=en-US`).then((res) => {
+      setDataMovieTrailer(res.data.results);
     });
   };
 
@@ -59,16 +70,20 @@ const Details = () => {
     router.push(`/details/${id}`);
   };
 
+  const handleMore = (id: string) => {
+    router.push(`/similarMovies/${id}`);
+  };
+
   return (
     <div className="w-screen h-fit">
       <div className="flex flex-col gap-8 pt-[52px] pb-[113px] px-[180px] w-full">
         <div className="flex justify-between">
           <div className="flex flex-col">
             <h3 className="text-[#09090B] text-4xl font-bold leading-[40px] ">
-              {data?.title}
+              {dataSpecificMovies?.title}
             </h3>
             <p className="text-lg leading-[28px] text-[#09090B]">
-              {data?.release_date}· PG · 2h 40m
+              {dataSpecificMovies?.release_date}· PG · 2h 40m
             </p>
           </div>
           <div className="flex flex-col">
@@ -80,14 +95,14 @@ const Details = () => {
               <div>
                 <div className="flex">
                   <p className="text-[#09090B] text-lg font-semibold leading-[28px]">
-                    {data?.vote_average}{" "}
+                    {dataSpecificMovies?.vote_average}{" "}
                   </p>
                   <p className=" flex items-center text-xs leading-[16px] text-[#71717A]">
                     /10
                   </p>
                 </div>
                 <p className="text-sm leading-[16px] text-[#71717A]">
-                  {data?.vote_count}
+                  {dataSpecificMovies?.vote_count}
                 </p>
               </div>
             </div>
@@ -96,40 +111,69 @@ const Details = () => {
 
         <div className="flex gap-8 pt-6">
           <Image
-            width={290}
-            height={428}
-            src={`https://image.tmdb.org/t/p/original${data?.poster_path}`}
-            alt="detail"
+            style={{ width: "290px", height: "428px" }}
+            width={0}
+            height={0}
+            priority
+            src={`https://image.tmdb.org/t/p/original${dataSpecificMovies?.poster_path}`}
+            alt="detail1"
+            unoptimized
           />
+
           <div className="flex relative w-full h-full">
             <Image
-              width={760}
-              height={428}
-              src={`https://image.tmdb.org/t/p/original${data?.backdrop_path}`}
-              alt="detail"
+              style={{ width: "760px", height: "428px" }}
+              width={0}
+              height={0}
+              priority
+              src={`https://image.tmdb.org/t/p/original${dataSpecificMovies?.backdrop_path}`}
+              alt="detail2"
+              unoptimized
             />
+
             <div className="flex gap-3 items-center absolute left-[24px] bottom-[24px] z-50">
-              <Button className="flex size-[40px] py-2 px-4 justify-center items-center rounded-[999px] bg-[#FFF]">
+              <Button
+                onClick={() => setIsPlaying(true)}
+                className="flex size-[40px] py-2 px-4 justify-center items-center rounded-[999px] bg-[#FFF]"
+              >
                 <Play className="size-[16px] stroke-[#18181B]" />
               </Button>
+              {dataMovieTrailer?.slice(0, 1).map(
+                (el, index) =>
+                  isPlaying && (
+                    <div key={index}>
+                      <iframe
+                        width="560"
+                        height="315"
+                        src={`https://www.youtube.com/embed/${el.key}?si=6jPOXrrh0EhAEg4b`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  )
+              )}
               <p className="text-base leading-[24px] text-[#FFF]">
                 Play Trailer
               </p>
               <p className="text-sm leading-[20px] text-[#FFF]">2:35</p>
             </div>
+            <PlayButton id={`${id}`} isDetail={true} />
           </div>
         </div>
         <MovieDetails />
 
         <div className="flex flex-col gap-8">
-          <Label text="More like this" />
+          <Label text="More like this" onClick={() => handleMore(id)} />
           <div className="flex flex-wrap gap-[32px]">
-            {dataSimilar?.slice(0, 5).map((el, index) => {
+            {dataSimilarMovies?.slice(0, 5).map((el, index) => {
               return (
                 <Movies
                   key={index}
                   onClick={() => handleOnClick(el.id)}
-                  poster_path={`https://image.tmdb.org/t/p/original${el.poster_path}`}
+                  poster_path={el.poster_path}
                   title={el.title}
                   vote_average={el.vote_average}
                 />

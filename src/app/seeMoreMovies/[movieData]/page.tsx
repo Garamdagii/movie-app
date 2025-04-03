@@ -1,9 +1,8 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 import { Label, Movies } from "@/components";
 
 type TitleTypes = {

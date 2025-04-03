@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { axiosInstance } from "@/lib/utils";
 import { useParams } from "next/navigation";
@@ -5,11 +7,6 @@ import { useEffect, useState } from "react";
 
 const jobTitle = ["Director", "Writers", "Stars"];
 
-type Props = {
-  overview: string;
-  genres: string;
-  jobTitle: string;
-};
 type DataTypes = {
   genres: genres[];
   overview: string;
@@ -45,17 +42,17 @@ export const MovieDetails = ({}) => {
   const { id } = useParams();
 
   useEffect(() => {
-    movieCredits();
-    specificMovies();
+    fetchDataMovieCredits();
+    fetchDataSpecificMovies();
   }, []);
 
-  const specificMovies = async () => {
+  const fetchDataSpecificMovies = async () => {
     await axiosInstance.get(`movie/${id}?language=en-US`).then((res) => {
       setDataSpecific(res.data);
     });
   };
 
-  const movieCredits = async () => {
+  const fetchDataMovieCredits = async () => {
     await axiosInstance
       .get(`movie/${id}/credits?language=en-US`)
       .then((res) => {

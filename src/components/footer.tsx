@@ -1,15 +1,11 @@
-import { Film, Phone, Mail } from "lucide-react";
+import { Phone, Mail } from "lucide-react";
+import { Logo } from "./logo";
 
 export const Footer = ({}) => {
   return (
     <div className="flex py-10 w-full h-[280px] bg-[#4338CA] gap-[120px] px-[60px]">
       <div className="flex flex-col gap-3 w-full">
-        <div className="flex gap-2">
-          <Film className="size-[20px] stroke-[#FAFAFA]" />
-          <p className="text-base italic font-bold leading-[20px] text-[#FAFAFA]">
-            Movie Z
-          </p>
-        </div>
+        <Logo isHeader={false} />
         <p className="text-sm leading-[20px] text-[#FAFAFA]">
           © 2024 Movie Z. All Rights Reserved.
         </p>

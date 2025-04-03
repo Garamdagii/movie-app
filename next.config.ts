@@ -2,11 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-   images: {
+  images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'image.tmdb.org',
+        protocol: `https`,
+        hostname: `image.tmdb.org`,
         // port: '',
         // pathname: '/account123/**',
         // search: '',

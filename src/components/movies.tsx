@@ -1,3 +1,5 @@
+"use client";
+
 import { Star } from "lucide-react";
 import Image from "next/image";
 
@@ -22,10 +24,13 @@ export const Movies = ({
       <Image
         width={230}
         height={340}
+        style={{ width: "230px", height: "340px" }}
+        priority
         src={`https://image.tmdb.org/t/p/original${poster_path}`}
         alt="image"
         className="rounded-[8px]"
       />
+
       <div className="flex flex-col p-2 items-start ">
         <div className="flex gap-1">
           <Star className="size-[16px] fill-[#FDE047] stroke-[#FDE047]" />
