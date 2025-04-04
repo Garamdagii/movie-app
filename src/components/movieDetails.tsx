@@ -36,7 +36,7 @@ type crew = {
 };
 
 export const MovieDetails = ({}) => {
-  const [dataSpecific, setDataSpecific] = useState<DataTypes>();
+  const [dataSpecificMovies, setDataSpecificMovies] = useState<DataTypes>();
   const [dataCredits, setDataCredits] = useState<CreditTypes>();
 
   const { id } = useParams();
@@ -48,7 +48,7 @@ export const MovieDetails = ({}) => {
 
   const fetchDataSpecificMovies = async () => {
     await axiosInstance.get(`movie/${id}?language=en-US`).then((res) => {
-      setDataSpecific(res.data);
+      setDataSpecificMovies(res.data);
     });
   };
 
@@ -63,7 +63,7 @@ export const MovieDetails = ({}) => {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-3">
-        {dataSpecific?.genres.map((value, index) => {
+        {dataSpecificMovies?.genres.map((value, index) => {
           return (
             <Badge
               className="flex py-[2px] px-[10px] justify-center items-center rounded-9999px border solid border-[#E4E4E7]
@@ -78,7 +78,7 @@ export const MovieDetails = ({}) => {
       </div>
 
       <p className="w-fit text-base leading-[24px] text-[#09090B]">
-        {dataSpecific?.overview}
+        {dataSpecificMovies?.overview}
       </p>
 
       <div className="flex flex-col gap-5">

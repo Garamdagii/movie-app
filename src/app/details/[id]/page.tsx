@@ -2,18 +2,11 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Star, Play } from "lucide-react";
+import { Star } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import {
-  Button,
-  CardDescription,
-  Label,
-  MovieDetails,
-  Movies,
-} from "@/components";
+import { Label, MovieDetails, Movies, PlayButton } from "@/components";
 import { axiosInstance } from "@/lib/utils";
-import { PlayButton } from "@/components/button";
 
 type DataTypes = {
   backdrop_path: string;
@@ -33,15 +26,12 @@ type DataTypes = {
 const Details = () => {
   const [dataSimilarMovies, setDataSimilarMovies] = useState<DataTypes[]>();
   const [dataSpecificMovies, setDataSpecificMovies] = useState<DataTypes>();
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [dataMovieTrailer, setDataMovieTrailer] = useState<DataTypes[]>();
 
   const { id }: { id: string } = useParams();
 
   useEffect(() => {
     fetchDataSimilarMovies();
     fetchDataSpecificMovies();
-    fetchDataMovieTrailer();
   }, []);
 
   const fetchDataSimilarMovies = async () => {
@@ -55,12 +45,6 @@ const Details = () => {
   const fetchDataSpecificMovies = async () => {
     await axiosInstance.get(`movie/${id}?language=en-US`).then((res) => {
       setDataSpecificMovies(res.data);
-    });
-  };
-
-  const fetchDataMovieTrailer = async () => {
-    await axiosInstance.get(`movie/${id}/videos?language=en-US`).then((res) => {
-      setDataMovieTrailer(res.data.results);
     });
   };
 
@@ -131,36 +115,9 @@ const Details = () => {
               unoptimized
             />
 
-            <div className="flex gap-3 items-center absolute left-[24px] bottom-[24px] z-50">
-              <Button
-                onClick={() => setIsPlaying(true)}
-                className="flex size-[40px] py-2 px-4 justify-center items-center rounded-[999px] bg-[#FFF]"
-              >
-                <Play className="size-[16px] stroke-[#18181B]" />
-              </Button>
-              {dataMovieTrailer?.slice(0, 1).map(
-                (el, index) =>
-                  isPlaying && (
-                    <div key={index}>
-                      <iframe
-                        width="560"
-                        height="315"
-                        src={`https://www.youtube.com/embed/${el.key}?si=6jPOXrrh0EhAEg4b`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        allowFullScreen
-                      ></iframe>
-                    </div>
-                  )
-              )}
-              <p className="text-base leading-[24px] text-[#FFF]">
-                Play Trailer
-              </p>
-              <p className="text-sm leading-[20px] text-[#FFF]">2:35</p>
+            <div className="flex items-center absolute left-[24px] bottom-[24px] z-0">
+              <PlayButton id={`${id}`} isDetail={true} />
             </div>
-            <PlayButton id={`${id}`} isDetail={true} />
           </div>
         </div>
         <MovieDetails />
@@ -197,3 +154,33 @@ export default Details;
 
 // { params: {id : string }
 // { params }: { params: Promise<{ id: string }> }
+
+{
+  /* <Button
+                onClick={() => setIsPlaying(true)}
+                className="flex size-[40px] py-2 px-4 justify-center items-center rounded-[999px] bg-[#FFF]"
+              >
+                <Play className="size-[16px] stroke-[#18181B]" />
+              </Button>
+              {dataMovieTrailer?.slice(0, 1).map(
+                (el, index) =>
+                  isPlaying && (
+                    <div key={index}>
+                      <iframe
+                        width="560"
+                        height="315"
+                        src={`https://www.youtube.com/embed/${el.key}?si=6jPOXrrh0EhAEg4b`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  )
+              )}
+              <p className="text-base leading-[24px] text-[#FFF]">
+                Play Trailer
+              </p>
+              <p className="text-sm leading-[20px] text-[#FFF]">2:35</p> */
+}

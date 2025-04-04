@@ -5,7 +5,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -46,50 +45,33 @@ export const PlayButton = ({
   };
 
   return (
-    // <div>
-    //   <button
-    //     onClick={() => setIsPlaying(true)}
-    //     className={`w-fit flex h-[40px] px-2 py-4 gap-2 justify-center items-center ${
-    //       isDetail ? "rounded-[999px] bg-black" : "rounded-[6px] bg-[#F4F4F5]"
-    //     } `}
-    //   >
-    //     <Play className="size-[16px] stroke-[#18181B]" />
-    //   </button>
-    //   {isDetail ? (
-    //     <div>
-    //       <p className="text-base leading-[24px] text-black">Play Trailer</p>
-    //       <p className="text-sm leading-[20px] text-black">2:35</p>
-    //     </div>
-    //   ) : (
-    //     <p className="text-sm font-medium leading-[20px] text-white">
-    //       Watch Trailer
-    //     </p>
-    //   )}
-
-    //   {dataMovieTrailer?.slice(0, 1).map(
-    //     (el, index) =>
-    //       isPlaying && (
-    //         <div key={index}>
-    //           <iframe
-    //             width="560"
-    //             height="315"
-    //             src={`https://www.youtube.com/embed/${el.key}?si=6jPOXrrh0EhAEg4b`}
-    //             title="YouTube video player"
-    //             frameBorder="0"
-    //             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    //             referrerPolicy="strict-origin-when-cross-origin"
-    //             allowFullScreen
-    //           ></iframe>
-    //         </div>
-    //       )
-    //   )}
-    // </div>
-    <div>
+    <div onClick={() => setIsPlaying(true)}>
       <Dialog>
-        <DialogTrigger>Play Trailer</DialogTrigger>
-        <DialogContent className="size-[50px] &>button]:hidden p-0 gap-0 margin-0 top-[30%] left-[30%] shadow-0 rounded-0">
+        <DialogTrigger className="flex gap-3 w-fit justify-center items-center">
+          <div
+            className={`flex h-[40px] px-2 py-4 gap-2 justify-center items-center ${
+              isDetail
+                ? "rounded-[999px] bg-[#FFF] w-[40px]"
+                : "rounded-[6px] bg-[#F4F4F5] text-sm font-medium leading-[20px] text-[#18181B] w-fit"
+            } `}
+          >
+            <Play className="size-[16px] stroke-[#18181B]" />
+            {isDetail ? null : "Watch Trailer"}
+          </div>
+          <div>
+            {isDetail ? (
+              <div className="flex">
+                <p className="text-base leading-[24px] text-[#FFF]">
+                  Play Trailer
+                </p>
+                <p className="text-sm leading-[20px] text-[#FFF]">2:35</p>
+              </div>
+            ) : null}
+          </div>
+        </DialogTrigger>
+        <DialogContent className="size-[100px] [&>button]:hidden bg-transparent border-none p-0 gap-0 margin-0 top-[30%] left-[30%] shadow-0 rounded-0">
           <DialogTitle></DialogTitle>
-
+          <DialogDescription></DialogDescription>
           {dataMovieTrailer?.slice(0, 1).map((el, index) => (
             <div key={index} className="">
               <iframe

@@ -14,3 +14,4 @@ export * from "./ui/dropdown-menu";
 export * from "./ui/separator";
 export * from "./logo";
 export * from "./movieGenres";
+export * from "./playButton";

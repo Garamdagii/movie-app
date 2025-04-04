@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Play, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -19,9 +19,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 import { axiosInstance } from "@/lib/utils";
-import { PlayButton } from "./button";
+import { PlayButton } from "./playButton";
 
 type TitleTypes = {
   backdrop_path: string;
@@ -65,12 +64,12 @@ export const NowPlaying = () => {
                   />
                 </div>
 
-                <Card className="w-[404px] h-fit absolute top-[178px] left-[140px] z-50 bg-transparent border-none shadow-none gap-4 p-0">
-                  <CardHeader>
+                <Card className="w-[404px] h-fit absolute top-[178px] left-[140px] z-50 bg-transparent border-none shadow-none gap-4">
+                  <CardHeader className="p-0">
                     <p className="text-base leading-[24px] text-[#FFF]">
                       Now Playing:
                     </p>
-                    <CardTitle className="w-full text-[36px] leading-[40px] font-bold text-[#FFF] ">
+                    <CardTitle className="w-full text-[36px] leading-[40px] font-bold text-[#FFF] p-0">
                       {data.title}
                     </CardTitle>
                     <div className="flex gap-1">
@@ -85,19 +84,12 @@ export const NowPlaying = () => {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="w-[302px]">
+                  <CardContent className="w-[302px] p-0">
                     <p className="text-xs leading-[16px] text-[#FAFAFA]">
                       {data.overview}
                     </p>
                   </CardContent>
                   <PlayButton isDetail={false} id={data.id} />
-                  <Button className="w-fit flex h-[40px] py-2 px-4 justify-center items-center gap-2 rounded-[6px] bg-[#F4F4F5] text-sm font-medium leading-[20px] text-[#18181B]">
-                    <Play className="size-[16px] stroke-[#18181B]" />
-                    Watch Trailer
-                  </Button>
-                  {/* <CardFooter>
-                    <p>Card Footer</p>
-                  </CardFooter> */}
                 </Card>
               </CarouselItem>
             );

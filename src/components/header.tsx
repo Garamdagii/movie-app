@@ -57,7 +57,6 @@ export const Header = ({}) => {
                       variant="outline"
                       onClick={() => handleOnClick(genre.id)}
                     >
-                      {" "}
                       {genre.name}
                     </Badge>
                   </DropdownMenuItem>

@@ -2,7 +2,7 @@
 
 import { MovieGenres, Movies, Separator } from "@/components";
 import { axiosInstance } from "@/lib/utils";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type Types = {
@@ -10,15 +10,24 @@ type Types = {
   vote_average: string;
   title: string;
   id: string;
+  name: string;
+  genres: genres[];
+};
+
+type genres = {
+  id: string;
+  name: string;
 };
 
 const SearchFilter = () => {
   const { id } = useParams();
 
   const [dataFiltered, setDataFiltered] = useState<Types[]>();
+  const [dataMovieGenres, setDataMovieGenres] = useState<genres[]>();
 
   useEffect(() => {
     fetchDataFiltered();
+    fetchDataMovieGenres();
   }, []);
 
   const fetchDataFiltered = async () => {
@@ -28,12 +37,24 @@ const SearchFilter = () => {
         setDataFiltered(res.data.results);
       });
   };
+  const fetchDataMovieGenres = async () => {
+    await axiosInstance.get("genre/movie/list?language=en").then((res) => {
+      setDataMovieGenres(res.data.genres);
+      console.log(res.data.genres);
+    });
+  };
 
   const router = useRouter();
 
   const handleOnClick = (id: string) => {
     router.push(`/details/${id}`);
   };
+
+  let titleGenres = dataMovieGenres?.filter((genre) => genre.id === id);
+  console.log(titleGenres, "working");
+  // const searchParams = useSearchParams();
+  // const arr = searchParams.getAll("genresIds");
+  // console.log(arr, "arr");
 
   return (
     <div className="flex flex-col gap-8 px-[80px]">
@@ -49,7 +70,13 @@ const SearchFilter = () => {
         <Separator orientation={"vertical"} />
 
         <div className="flex flex-col gap-8">
-          <h3>titles in </h3>
+          <h3>
+            titles in{" "}
+            {titleGenres?.map((genre) => (
+              <span>{genre.name}</span>
+            ))}
+          </h3>
+
           <div className="flex flex-wrap gap-x-12 gap-y-8">
             {dataFiltered?.map((el, index) => {
               return (

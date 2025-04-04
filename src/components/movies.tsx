@@ -21,15 +21,18 @@ export const Movies = ({
       onClick={onClick}
       className="flex flex-col w-fit h-[439px] bg-[#F4F4F5] rounded-[8px]"
     >
-      <Image
-        width={230}
-        height={340}
-        style={{ width: "230px", height: "340px" }}
-        priority
-        src={`https://image.tmdb.org/t/p/original${poster_path}`}
-        alt="image"
-        className="rounded-[8px]"
-      />
+      <div className="w-[230px] h-[340px]">
+        <Image
+          width={230}
+          height={340}
+          style={{ width: "230px", height: "340px" }}
+          priority
+          src={`https://image.tmdb.org/t/p/original${poster_path}`}
+          alt="image"
+          className="rounded-[8px]"
+          unoptimized
+        />
+      </div>
 
       <div className="flex flex-col p-2 items-start ">
         <div className="flex gap-1">
