@@ -6,23 +6,26 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type Types = {
-  poster_path: string;
-  vote_average: string;
-  title: string;
-  id: string;
-  name: string;
   genres: genres[];
+  results: results[];
+  total_results: number;
 };
-
 type genres = {
   id: string;
   name: string;
 };
 
+type results = {
+  title: string;
+  vote_average: string;
+  poster_path: string;
+  id: string;
+};
+
 const SearchFilter = () => {
   const { id } = useParams();
 
-  const [dataFiltered, setDataFiltered] = useState<Types[]>();
+  const [dataFiltered, setDataFiltered] = useState<Types>();
   const [dataMovieGenres, setDataMovieGenres] = useState<genres[]>();
 
   useEffect(() => {
@@ -34,13 +37,12 @@ const SearchFilter = () => {
     await axiosInstance
       .get(`discover/movie?language=en&with_genres=${id}&page=1`)
       .then((res) => {
-        setDataFiltered(res.data.results);
+        setDataFiltered(res.data);
       });
   };
   const fetchDataMovieGenres = async () => {
     await axiosInstance.get("genre/movie/list?language=en").then((res) => {
       setDataMovieGenres(res.data.genres);
-      console.log(res.data.genres);
     });
   };
 
@@ -50,8 +52,8 @@ const SearchFilter = () => {
     router.push(`/details/${id}`);
   };
 
-  let titleGenres = dataMovieGenres?.filter((genre) => genre.id === id);
-  console.log(titleGenres, "working");
+  const titleGenres = dataMovieGenres?.filter((genre) => genre.id == id);
+  // console.log(titleGenres);
   // const searchParams = useSearchParams();
   // const arr = searchParams.getAll("genresIds");
   // console.log(arr, "arr");
@@ -71,14 +73,14 @@ const SearchFilter = () => {
 
         <div className="flex flex-col gap-8">
           <h3>
-            titles in{" "}
-            {titleGenres?.map((genre) => (
-              <span>{genre.name}</span>
+            {dataFiltered?.total_results} titles in{" "}
+            {titleGenres?.map((genre, index) => (
+              <span key={index}>{genre.name}</span>
             ))}
           </h3>
 
           <div className="flex flex-wrap gap-x-12 gap-y-8">
-            {dataFiltered?.map((el, index) => {
+            {dataFiltered?.results.map((el, index) => {
               return (
                 <Movies
                   key={index}
