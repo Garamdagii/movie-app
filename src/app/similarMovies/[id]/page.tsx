@@ -45,7 +45,7 @@ const SimilarMovies = () => {
 
   return (
     <div className="flex flex-col gap-8">
-      <Label text="More like this" />
+      <Label text="More like this" onClick={() => {}} />
       <div className="flex flex-wrap gap-[32px]">
         {dataSimilarMovies?.map((el, index) => {
           return (
