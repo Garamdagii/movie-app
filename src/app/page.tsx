@@ -1,23 +1,6 @@
 "use client";
 
 import { NowPlaying, SortedMovies } from "@/components";
-import {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { PopoverPortal } from "@radix-ui/react-popover";
 
 const data = [
   {
@@ -48,29 +31,5 @@ export default function Home() {
         })}
       </div>
     </div>
-    // <div>
-    //   <Command>
-    //     <CommandInput placeholder="Type a command or search..." />
-    //     <Popover>
-    //       <PopoverTrigger>
-    //         <CommandList>
-    //           <CommandEmpty>No results found.</CommandEmpty>
-    //           <CommandGroup heading="Suggestions">
-    //             <CommandItem>Calendar</CommandItem>
-    //             <CommandItem>Search Emoji</CommandItem>
-    //             <CommandItem>Calculator</CommandItem>
-    //           </CommandGroup>
-    //           <CommandSeparator />
-    //           <CommandGroup heading="Settings">
-    //             <CommandItem>Profile</CommandItem>
-    //             <CommandItem>Billing</CommandItem>
-    //             <CommandItem>Settings</CommandItem>
-    //           </CommandGroup>
-    //         </CommandList>
-    //       </PopoverTrigger>
-    //       <PopoverContent>Place content for the popover here.</PopoverContent>
-    //     </Popover>
-    //   </Command>
-    // </div>
   );
 }

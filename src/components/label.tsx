@@ -24,5 +24,3 @@ export const Label = ({
     </div>
   );
 };
-
-// currentpage === index
