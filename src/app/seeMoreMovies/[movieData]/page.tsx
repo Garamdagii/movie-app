@@ -69,7 +69,7 @@ const SeeMoreMovies = () => {
 
   return (
     <div className="flex flex-col gap-8 px-[80px] py-[52px]">
-      <Label text={`${movieData}`} />
+      <Label text={`${movieData}`} onClick={() => {}} />
       <div className="flex flex-wrap gap-8">
         {data?.results.map((el, index) => {
           return (
