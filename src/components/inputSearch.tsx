@@ -89,7 +89,11 @@ export const Input = () => {
                         {value.title}
                       </h3>
                       <div className="flex w-[454px]">
-                        <Label text={value.release_date.slice(0, 4)} />
+                        <Label
+                          text={value.release_date.slice(0, 4)}
+                          seeMore={true}
+                          onClick={() => {}}
+                        />
                       </div>
                     </div>
                   </div>

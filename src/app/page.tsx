@@ -19,6 +19,7 @@ const data = [
 
 export default function Home() {
   return (
+
     <div className="flex flex-col w-screen h-fit gap-[24px] ">
       <NowPlaying />
       <div className="flex flex-col gap-8 px-20 py-[52px] w-full">
@@ -31,5 +32,7 @@ export default function Home() {
         })}
       </div>
     </div>
+
+
   );
 }

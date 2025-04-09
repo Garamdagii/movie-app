@@ -32,6 +32,7 @@ const SeeMoreMovies = () => {
   const searchParams = useSearchParams();
   const page = searchParams.get("page");
   const [currentPage, setCurrentPage] = useState(parseInt(page || "1"));
+
   const { movieData } = useParams();
 
   const router = useRouter();
@@ -40,11 +41,9 @@ const SeeMoreMovies = () => {
     router.push(`/details/${id}`);
   };
 
-  // console.log(page);
-
   useEffect(() => {
     sortedMovies();
-  }, []);
+  }, [currentPage]);
 
   const sortedMovies = async () => {
     const dataUrl = `movie/${movieData}?language=en-US&page=${currentPage}`;
@@ -53,23 +52,11 @@ const SeeMoreMovies = () => {
     });
   };
 
-  const handlePreviousPages = () => {
-    if (currentPage !== 1) setCurrentPage(currentPage - 1);
-  };
-
-  const handleNextPages = () => {
-    if (currentPage !== 10) setCurrentPage(currentPage + 1);
-  };
-
-  // const pages = total_pages?.forEach((value, key) => {
-  //   [key] = value;
-  // });
-
   const pages = [1, 2, 3];
 
   return (
     <div className="flex flex-col gap-8 px-[80px] py-[52px]">
-      <Label text={`${movieData}`} onClick={() => {}} />
+      <Label text={`${movieData}`} seeMore={false} onClick={() => {}} />
       <div className="flex flex-wrap gap-8">
         {data?.results.map((el, index) => {
           return (
@@ -87,13 +74,14 @@ const SeeMoreMovies = () => {
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious href="#" onClick={handlePreviousPages} />
+            <PaginationPrevious
+              onClick={() => setCurrentPage(currentPage - 1)}
+            />
           </PaginationItem>
           {pages.map((page, index) => (
             <PaginationLink
               key={index}
               isActive={currentPage == index + 1}
-              href={`movie/${movieData}?language=en-US&page=${index + 1}`}
               onClick={() => setCurrentPage(index + 1)}
             >
               {index + 1}
@@ -103,7 +91,7 @@ const SeeMoreMovies = () => {
             <PaginationEllipsis />
           </PaginationItem>
           <PaginationItem>
-            <PaginationNext href="#" onClick={handleNextPages} />
+            <PaginationNext onClick={() => setCurrentPage(currentPage + 1)} />
           </PaginationItem>
         </PaginationContent>
       </Pagination>

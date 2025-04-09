@@ -9,10 +9,13 @@ export const Logo = ({ isHeader }: { isHeader: boolean }) => {
   const handleOnClick = () => {
     router.push("/");
   };
+
   return (
     <div
       onClick={handleOnClick}
-      className="flex justify-center items-center gap-2"
+      className={`flex ${
+        isHeader ? "justify-center items-center" : "items-center"
+      } gap-2`}
     >
       <Film
         className={`size-[20px] ${

@@ -123,7 +123,11 @@ const Details = () => {
         <MovieDetails />
 
         <div className="flex flex-col gap-8">
-          <Label text="More like this" onClick={() => handleMore(id)} />
+          <Label
+            text="More like this"
+            seeMore={true}
+            onClick={() => handleMore(id)}
+          />
           <div className="flex flex-wrap gap-[32px]">
             {dataSimilarMovies?.slice(0, 5).map((el, index) => {
               return (
@@ -144,43 +148,3 @@ const Details = () => {
 };
 
 export default Details;
-
-// getfetchdata
-// async
-// await
-
-// suspense
-// fallback - skeleteon bichih
-
-// { params: {id : string }
-// { params }: { params: Promise<{ id: string }> }
-
-{
-  /* <Button
-                onClick={() => setIsPlaying(true)}
-                className="flex size-[40px] py-2 px-4 justify-center items-center rounded-[999px] bg-[#FFF]"
-              >
-                <Play className="size-[16px] stroke-[#18181B]" />
-              </Button>
-              {dataMovieTrailer?.slice(0, 1).map(
-                (el, index) =>
-                  isPlaying && (
-                    <div key={index}>
-                      <iframe
-                        width="560"
-                        height="315"
-                        src={`https://www.youtube.com/embed/${el.key}?si=6jPOXrrh0EhAEg4b`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        allowFullScreen
-                      ></iframe>
-                    </div>
-                  )
-              )}
-              <p className="text-base leading-[24px] text-[#FFF]">
-                Play Trailer
-              </p>
-              <p className="text-sm leading-[20px] text-[#FFF]">2:35</p> */
-}

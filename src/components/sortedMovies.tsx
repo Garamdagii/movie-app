@@ -61,7 +61,11 @@ export const SortedMovies = ({
 
   return (
     <div className="flex flex-col gap-8">
-      <Label text={titleName} onClick={() => handleSeeMore(movieData)} />
+      <Label
+        text={titleName}
+        seeMore={true}
+        onClick={() => handleSeeMore(movieData)}
+      />
       <div className="flex flex-wrap gap-[32px]">
         {data?.slice(0, 10).map((el, index) => {
           return (

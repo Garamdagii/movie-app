@@ -28,19 +28,17 @@ type TitleTypes = {
   id: string;
   overview: string;
   poster_path: string;
-  release_date: string;
   title: string;
-  video: boolean;
   vote_average: string;
   vote_count: number;
 };
 
 export const NowPlaying = () => {
-  const [data, setData] = useState<TitleTypes[]>();
+  const [datas, setDatas] = useState<TitleTypes[]>();
 
   useEffect(() => {
     axiosInstance.get("movie/now_playing?language=en-US&page=1").then((res) => {
-      setData(res.data.results);
+      setDatas(res.data.results);
     });
     // .catch((err) => console.log(err, "error"));
   }, []);
@@ -49,7 +47,7 @@ export const NowPlaying = () => {
     <div>
       <Carousel>
         <CarouselContent>
-          {data?.splice(0, 3).map((data, index) => {
+          {datas?.splice(0, 3).map((data, index) => {
             return (
               <CarouselItem className="relative w-full h-full" key={index}>
                 <div className="flex w-full h-[600px] relative">
@@ -95,8 +93,8 @@ export const NowPlaying = () => {
             );
           })}
         </CarouselContent>
-        <CarouselPrevious className="left-[44px]" />
-        <CarouselNext className="right-[44px]" />
+        <CarouselPrevious className="left-[44px] disabled:invisible" />
+        <CarouselNext className="right-[44px] disabled:invisible" />
       </Carousel>
     </div>
   );
